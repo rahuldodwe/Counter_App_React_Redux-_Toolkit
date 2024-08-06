@@ -1,33 +1,31 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { counterActions } from "../store/counter";
+import { privacyActions } from "../store/privacy";
 
 const Controls = () => {
-
   const dispatch = useDispatch();
   const inputElement = useRef();
 
   const handleIncrement = () => {
-    dispatch({type: "INCREMENT"});
+    dispatch(counterActions.increment());
   }
 
   const handleDecrement = () => {
-    dispatch({type: "DECREMENT"});
+    dispatch(counterActions.decrement());
   }
+
   const handlePrivacyToggle = () => {
-    dispatch({type: "PRIVACY_TOGGLE"});
+    dispatch(privacyActions.toggle());
   }
 
-  const handleAdd = () => {  
-    dispatch({type: "ADD", payload: {
-      num: inputElement.current.value,
-    }});
+  const handleAdd = () => {
+    dispatch(counterActions.add(inputElement.current.value));
     inputElement.current.value = "";
-  }
+  };
 
-  const handleSub = () => {  
-    dispatch({type: "SUB", payload: {
-      num: inputElement.current.value, 
-    }});
+  const handleSub = () => {
+    dispatch(counterActions.sub(inputElement.current.value));
     inputElement.current.value = "";
   }
 
@@ -39,7 +37,7 @@ const Controls = () => {
         <button type="button" className="btn btn-warning" onClick={handlePrivacyToggle}>Privacy Toggle</button>
       </div>
       <div className="d-grid gap-2 d-sm-flex justify-content-sm-center p-2">
-        <input className="number-input" type="text" placeholder="Enter number" ref={inputElement}/>
+        <input className="number-input" type="text" placeholder="Enter number" ref={inputElement} />
         <button type="button" className="btn btn-info" onClick={handleAdd}>Add</button>
         <button type="button" className="btn btn-danger" onClick={handleSub} >Subtract</button>
       </div>
